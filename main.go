@@ -3,13 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	for i := 0; i <= 10; i++ {
-		fmt.Print(i)
-		if i%2 == 0 {
-			fmt.Println(" Genap")
-		} else {
-			fmt.Println(" Ganjil")
-		}
-	}
 
+	name := []string{"david", "fadli", "fisa", "rafi", "kadek", "kevin", "iqbal", "irfan", "edwin", "jaka"}
+
+	for i, t := range name {
+		fmt.Println("Name", i+1, "=", t)
+	}
 }
