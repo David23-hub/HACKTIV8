@@ -3,14 +3,18 @@ package main
 import "fmt"
 
 func main() {
-	listFriend()
 
-}
+	david := "david"
+	kevin := "fadli"
 
-func listFriend() {
-	name := []string{"david", "fadli", "fisa", "rafi", "kadek", "kevin", "iqbal", "irfan", "edwin", "jaka"}
+	friends := []*string{&david, &kevin}
 
-	for i, t := range name {
-		fmt.Println("Name", i+1, "=", t)
+	function := func(teman []*string) {
+		for _, t := range teman {
+			fmt.Println(*t)
+		}
+
 	}
+
+	function(friends)
 }
