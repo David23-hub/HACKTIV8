@@ -10,7 +10,7 @@ type User struct {
 
 type UserIface interface {
 	Register(user *User) string
-	GetAll() []User
+	GetAll(c chan *ListUser)
 }
 
 func NewUserService() UserIface {
@@ -22,7 +22,6 @@ func (u *ListUser) Register(user *User) string {
 	return user.Name + " Berhasil Ditambahkan!"
 }
 
-func (u *ListUser) GetAll() []User {
-
-	return u.Users
+func (u *ListUser) GetAll(c chan *ListUser) {
+	c <- u
 }
