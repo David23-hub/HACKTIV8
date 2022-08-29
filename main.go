@@ -1,15 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"HACKTIVE8/service"
+	"fmt"
+)
 
 func main() {
-	for i := 0; i <= 10; i++ {
-		fmt.Print(i)
-		if i%2 == 0 {
-			fmt.Println(" Genap")
-		} else {
-			fmt.Println(" Ganjil")
-		}
+
+	userSvc := service.NewUserService()
+	msg := userSvc.Register(&service.User{Name: "david"})
+	fmt.Println(msg)
+	msg = userSvc.Register(&service.User{Name: "rafi"})
+	fmt.Println(msg)
+
+	res := userSvc.GetAll()
+
+	for i, t := range res {
+		fmt.Printf("User ke-%d : %v\n", i+1, t.Name)
 	}
 
 }
