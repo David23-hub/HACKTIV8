@@ -35,8 +35,10 @@ func (u *ListUser) GetAll() []User {
 }
 
 func (u *ListUser) RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	u.Users = append(u.Users, User{Name: "david"})
-	w.Write([]byte("David Sudah Terdaftar"))
+	user := User{Name: "david"}
+	u.Users = append(u.Users, user)
+	res, _ := json.Marshal(user)
+	w.Write(res)
 
 }
 
