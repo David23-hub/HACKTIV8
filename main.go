@@ -2,25 +2,15 @@ package main
 
 import (
 	"HACKTIVE8/service"
-	"fmt"
+	"net/http"
 )
 
 func main() {
-
 	userSvc := service.NewUserService()
-	msg := userSvc.Register(&service.User{Name: "david"})
-	fmt.Println(msg)
-	msg = userSvc.Register(&service.User{Name: "rafi"})
-	fmt.Println(msg)
 
-	c := make(chan *service.ListUser, 1)
-	go userSvc.GetAll(c)
+	http.HandleFunc("/register", userSvc.RegisterHandler)
+	http.HandleFunc("/alluser", userSvc.UserHandler)
 
-	res := <-c
-	for i, t := range res.Users {
-		fmt.Printf("User ke-%d : %v\n", i+1, t.Name)
-	}
-	fmt.Println("LEWAT")
-	close(c)
+	http.ListenAndServe("localhost:8000", nil)
 
 }

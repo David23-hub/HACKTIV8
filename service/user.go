@@ -1,5 +1,10 @@
 package service
 
+import (
+	"encoding/json"
+	"net/http"
+)
+
 type ListUser struct {
 	Users []User
 }
@@ -9,8 +14,10 @@ type User struct {
 }
 
 type UserIface interface {
+	RegisterHandler(w http.ResponseWriter, r *http.Request)
+	UserHandler(w http.ResponseWriter, r *http.Request)
 	Register(user *User) string
-	GetAll(c chan *ListUser)
+	GetAll() []User
 }
 
 func NewUserService() UserIface {
@@ -22,6 +29,18 @@ func (u *ListUser) Register(user *User) string {
 	return user.Name + " Berhasil Ditambahkan!"
 }
 
-func (u *ListUser) GetAll(c chan *ListUser) {
-	c <- u
+func (u *ListUser) GetAll() []User {
+
+	return u.Users
+}
+
+func (u *ListUser) RegisterHandler(w http.ResponseWriter, r *http.Request) {
+	u.Users = append(u.Users, User{Name: "david"})
+	w.Write([]byte("David Sudah Terdaftar"))
+
+}
+
+func (u *ListUser) UserHandler(w http.ResponseWriter, r *http.Request) {
+	res, _ := json.Marshal(u.Users)
+	w.Write(res)
 }
